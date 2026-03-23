@@ -71,5 +71,6 @@ export const config: SubscriberConfig = {
     "product.deleted",
     "customer.created",
     "customer.updated",
+    "hosting.deployment",
   ],
 };
