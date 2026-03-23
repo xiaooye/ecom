@@ -1,0 +1,8 @@
+{
+  "name": "webstore",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "storefront"
+  ]
+}
