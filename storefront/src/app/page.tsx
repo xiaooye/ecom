@@ -9,6 +9,7 @@ import { NewsletterCta } from "@/components/home/newsletter-cta";
 import { InstagramFeed } from "@/components/home/instagram-feed";
 import { BrandsMarquee } from "@/components/home/brands-marquee";
 import { FeaturesGrid } from "@/components/home/features-grid";
+import { CollectionBanner } from "@/components/home/collection-banner";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function ProductsSkeleton() {
@@ -38,6 +39,7 @@ export default function HomePage() {
       <Suspense fallback={<ProductsSkeleton />}>
         <FeaturedProducts />
       </Suspense>
+      <CollectionBanner />
       <StatsSection />
       <Testimonials />
       <FeaturesGrid />
