@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { ShoppingBag, Loader2, Check } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cart-store";
 import { createCart, addToCart } from "@/lib/medusa/cart";
@@ -10,9 +11,10 @@ import { useRegionStore } from "@/stores/region-store";
 interface AddToCartProps {
   variantId: string | null;
   available: boolean;
+  productTitle?: string;
 }
 
-export function AddToCart({ variantId, available }: AddToCartProps) {
+export function AddToCart({ variantId, available, productTitle }: AddToCartProps) {
   const [isPending, startTransition] = useTransition();
   const [added, setAdded] = useState(false);
   const { cartId, setCartId, openCart } = useCartStore();
@@ -36,9 +38,10 @@ export function AddToCart({ variantId, available }: AddToCartProps) {
         await addToCart(currentCartId, variantId, 1);
         setAdded(true);
         openCart();
+        toast.success(productTitle ? `${productTitle} added to cart` : "Added to cart");
         setTimeout(() => setAdded(false), 2000);
-      } catch (error) {
-        console.error("Failed to add to cart:", error);
+      } catch {
+        toast.error("Failed to add to cart. Please try again.");
       }
     });
   };

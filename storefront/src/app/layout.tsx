@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import { Toaster } from "sonner";
 import { Providers } from "@/components/layout/providers";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -39,6 +40,7 @@ export default async function RootLayout({
               <main className="flex-1">{children}</main>
               <Footer />
             </div>
+            <Toaster position="bottom-right" richColors closeButton />
           </Providers>
         </NextIntlClientProvider>
       </body>

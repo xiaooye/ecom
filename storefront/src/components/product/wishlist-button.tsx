@@ -1,6 +1,7 @@
 "use client";
 
 import { Heart } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useWishlistStore } from "@/stores/wishlist-store";
 import { cn } from "@/lib/utils";
@@ -22,7 +23,9 @@ export function WishlistButton({ product, variant = "icon" }: WishlistButtonProp
   const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    const wasInWishlist = inWishlist;
     toggleItem(product);
+    toast.success(wasInWishlist ? `${product.title} removed from wishlist` : `${product.title} added to wishlist`);
   };
 
   if (variant === "icon") {

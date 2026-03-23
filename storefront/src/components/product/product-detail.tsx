@@ -76,6 +76,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
         <AddToCart
           variantId={selectedVariant?.id ?? null}
           available={inStock}
+          productTitle={product.title}
         />
 
         <WishlistButton
