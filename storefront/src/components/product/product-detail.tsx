@@ -6,6 +6,7 @@ import { VariantSelector } from "./variant-selector";
 import { AddToCart } from "./add-to-cart";
 import { QuantitySelector } from "./quantity-selector";
 import { WishlistButton } from "./wishlist-button";
+import { ProductTabs } from "./product-tabs";
 import { formatPrice } from "@/lib/format-price";
 import { Separator } from "@/components/ui/separator";
 import type { Product } from "@/lib/types";
@@ -100,17 +101,11 @@ export function ProductDetail({ product }: ProductDetailProps) {
           </p>
         )}
 
-        {product.description && (
-          <>
-            <Separator />
-            <div>
-              <h2 className="text-lg font-semibold">Description</h2>
-              <p className="mt-2 text-muted-foreground leading-relaxed">
-                {product.description}
-              </p>
-            </div>
-          </>
-        )}
+      </div>
+
+      {/* Full-width tabs below the grid */}
+      <div className="col-span-full">
+        <ProductTabs description={product.description} />
       </div>
     </div>
   );
