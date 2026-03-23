@@ -26,6 +26,21 @@ export const metadata: Metadata = {
   },
   description:
     "Shop the latest clothing collections. Quality apparel for every style.",
+  manifest: "/manifest.json",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#171717" },
+  ],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "WebStore",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "WebStore",
+  },
 };
 
 export default async function RootLayout({
