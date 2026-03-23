@@ -13,6 +13,7 @@ import {
 import { STORE_NAME } from "@/lib/constants";
 import { CartCount } from "@/components/layout/cart-count";
 import { SearchDialog } from "@/components/layout/search-dialog";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 const navLinks = [
   { href: "/products", label: "Shop All" },
@@ -95,6 +96,7 @@ export function Header() {
               <span className="sr-only">Search</span>
             </Button>
           </Link>
+          <ThemeToggle />
           <Link href="/wishlist" className="hidden sm:inline-flex">
             <Button variant="ghost" size="icon" className="h-9 w-9">
               <Heart className="h-4 w-4" />
