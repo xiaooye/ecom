@@ -1,10 +1,10 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { Button, type ButtonProps } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-interface LoadingButtonProps extends ButtonProps {
+interface LoadingButtonProps extends React.ComponentProps<typeof Button> {
   loading?: boolean;
   loadingText?: string;
 }
