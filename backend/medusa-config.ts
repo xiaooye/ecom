@@ -19,6 +19,9 @@ module.exports = defineConfig({
       resolve: "./src/modules/review",
     },
     {
+      resolve: "./src/modules/webhook",
+    },
+    {
       resolve: "@medusajs/medusa/payment",
       options: {
         providers: [
