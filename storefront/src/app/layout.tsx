@@ -13,6 +13,8 @@ import { ScrollToTop } from "@/components/shared/scroll-to-top";
 import { ScrollProgress } from "@/components/shared/scroll-progress";
 import { CookieConsent } from "@/components/shared/cookie-consent";
 import { CompareBar } from "@/components/shared/compare-bar";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const inter = Inter({
@@ -76,6 +78,8 @@ export default async function RootLayout({
             <CompareBar />
             <CookieConsent />
             <Toaster position="bottom-right" richColors closeButton />
+            <Analytics />
+            <SpeedInsights />
           </Providers>
         </NextIntlClientProvider>
       </body>
