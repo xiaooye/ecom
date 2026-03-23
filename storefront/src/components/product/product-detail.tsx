@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { ProductGallery } from "./product-gallery";
 import { VariantSelector } from "./variant-selector";
 import { AddToCart } from "./add-to-cart";
+import { WishlistButton } from "./wishlist-button";
 import { formatPrice } from "@/lib/format-price";
 import { Separator } from "@/components/ui/separator";
 
@@ -95,6 +96,16 @@ export function ProductDetail({ product }: ProductDetailProps) {
         <AddToCart
           variantId={selectedVariant?.id ?? null}
           available={inStock}
+        />
+
+        <WishlistButton
+          product={{
+            id: product.id,
+            title: product.title,
+            handle: "",
+            thumbnail: images[0]?.url ?? null,
+          }}
+          variant="default"
         />
 
         {selectedVariant?.sku && (
