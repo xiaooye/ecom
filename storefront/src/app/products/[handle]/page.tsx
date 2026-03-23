@@ -6,6 +6,8 @@ import { ProductCard } from "@/components/product/product-card";
 import { ProductJsonLd } from "@/components/shared/product-json-ld";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { Separator } from "@/components/ui/separator";
+import { RecentlyViewed } from "@/components/product/recently-viewed";
+import { TrackView } from "@/components/product/track-view";
 import type { Product } from "@/lib/types";
 
 interface ProductPageProps {
@@ -83,6 +85,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
         url={`/products/${handle}`}
       />
 
+      <TrackView
+        product={{
+          id: product.id,
+          title: product.title,
+          handle: product.handle ?? handle,
+          thumbnail: product.thumbnail,
+        }}
+      />
+
       {relatedProducts.length > 0 && (
         <>
           <Separator className="my-16" />
@@ -98,6 +109,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </section>
         </>
       )}
+
+      <RecentlyViewed excludeId={product.id} />
     </div>
   );
 }
