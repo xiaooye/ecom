@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { ProductGallery } from "./product-gallery";
 import { VariantSelector } from "./variant-selector";
 import { AddToCart } from "./add-to-cart";
+import { QuantitySelector } from "./quantity-selector";
 import { WishlistButton } from "./wishlist-button";
 import { formatPrice } from "@/lib/format-price";
 import { Separator } from "@/components/ui/separator";
@@ -39,6 +40,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
     });
   }, [product.variants, selectedOptions]);
 
+  const [quantity, setQuantity] = useState(1);
   const price = selectedVariant?.calculated_price;
   const inStock = (selectedVariant?.inventory_quantity ?? 0) > 0;
 
@@ -73,10 +75,13 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
         <Separator />
 
+        <QuantitySelector value={quantity} onChange={setQuantity} />
+
         <AddToCart
           variantId={selectedVariant?.id ?? null}
           available={inStock}
           productTitle={product.title}
+          quantity={quantity}
         />
 
         <WishlistButton

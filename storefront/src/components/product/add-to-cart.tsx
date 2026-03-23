@@ -12,9 +12,10 @@ interface AddToCartProps {
   variantId: string | null;
   available: boolean;
   productTitle?: string;
+  quantity?: number;
 }
 
-export function AddToCart({ variantId, available, productTitle }: AddToCartProps) {
+export function AddToCart({ variantId, available, productTitle, quantity = 1 }: AddToCartProps) {
   const [isPending, startTransition] = useTransition();
   const [added, setAdded] = useState(false);
   const { cartId, setCartId, openCart } = useCartStore();
@@ -35,7 +36,7 @@ export function AddToCart({ variantId, available, productTitle }: AddToCartProps
 
         if (!currentCartId) return;
 
-        await addToCart(currentCartId, variantId, 1);
+        await addToCart(currentCartId, variantId, quantity);
         setAdded(true);
         openCart();
         toast.success(productTitle ? `${productTitle} added to cart` : "Added to cart");
