@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { CartSummary } from "@/components/cart/cart-summary";
+import { CheckoutStepper } from "@/components/checkout/checkout-stepper";
 import { useCartStore } from "@/stores/cart-store";
 import {
   getCart,
@@ -160,23 +161,7 @@ export function CheckoutForm() {
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-5">
       {/* Form */}
       <div className="lg:col-span-3">
-        {/* Step indicators */}
-        <div className="mb-8 flex items-center gap-2 text-sm">
-          {(["information", "shipping", "payment"] as const).map((s, i) => (
-            <span key={s} className="flex items-center gap-2">
-              {i > 0 && <span className="text-muted-foreground">/</span>}
-              <span
-                className={
-                  step === s
-                    ? "font-semibold text-foreground"
-                    : "text-muted-foreground"
-                }
-              >
-                {s.charAt(0).toUpperCase() + s.slice(1)}
-              </span>
-            </span>
-          ))}
-        </div>
+        <CheckoutStepper currentStep={step} />
 
         {error && (
           <div className="mb-4 rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive">

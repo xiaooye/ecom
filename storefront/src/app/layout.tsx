@@ -8,6 +8,8 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { CartSheet } from "@/components/layout/cart-sheet";
 import { MobileNav } from "@/components/layout/mobile-nav";
+import { ScrollToTop } from "@/components/shared/scroll-to-top";
+import { ScrollProgress } from "@/components/shared/scroll-progress";
 import "./globals.css";
 
 const inter = Inter({
@@ -44,6 +46,8 @@ export default async function RootLayout({
               <MobileNav />
             </div>
             <CartSheet />
+            <ScrollToTop />
+            <ScrollProgress />
             <Toaster position="bottom-right" richColors closeButton />
           </Providers>
         </NextIntlClientProvider>
