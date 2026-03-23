@@ -12,6 +12,7 @@ import { MobileNav } from "@/components/layout/mobile-nav";
 import { ScrollToTop } from "@/components/shared/scroll-to-top";
 import { ScrollProgress } from "@/components/shared/scroll-progress";
 import { CookieConsent } from "@/components/shared/cookie-consent";
+import { CompareBar } from "@/components/shared/compare-bar";
 import "./globals.css";
 
 const inter = Inter({
@@ -72,6 +73,7 @@ export default async function RootLayout({
             <CartSheet />
             <ScrollToTop />
             <ScrollProgress />
+            <CompareBar />
             <CookieConsent />
             <Toaster position="bottom-right" richColors closeButton />
           </Providers>
