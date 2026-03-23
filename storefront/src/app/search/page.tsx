@@ -7,24 +7,14 @@ import { Input } from "@/components/ui/input";
 import { ProductGrid } from "@/components/product/product-grid";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { getProductsList } from "@/lib/medusa/products";
+import type { Product } from "@/lib/types";
 
 export default function SearchPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") || "";
   const [query, setQuery] = useState(initialQuery);
-  const [products, setProducts] = useState<Array<{
-    id: string;
-    title: string;
-    handle: string;
-    thumbnail?: string | null;
-    variants?: Array<{
-      calculated_price?: {
-        calculated_amount?: number;
-        currency_code?: string;
-      };
-    }>;
-  }>>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [isPending, startTransition] = useTransition();
   const [searched, setSearched] = useState(false);
 
@@ -39,7 +29,7 @@ export default function SearchPage() {
     startTransition(async () => {
       try {
         const response = await getProductsList({ q, limit: 20 });
-        setProducts(response.products ?? []);
+        setProducts((response.products ?? []) as Product[]);
       } catch {
         setProducts([]);
       }

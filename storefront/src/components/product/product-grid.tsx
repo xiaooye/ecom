@@ -1,17 +1,5 @@
 import { ProductCard } from "./product-card";
-
-interface Product {
-  id: string;
-  title: string;
-  handle: string;
-  thumbnail?: string | null;
-  variants?: Array<{
-    calculated_price?: {
-      calculated_amount?: number;
-      currency_code?: string;
-    };
-  }>;
-}
+import type { Product } from "@/lib/types";
 
 export function ProductGrid({ products }: { products: Product[] }) {
   if (products.length === 0) {

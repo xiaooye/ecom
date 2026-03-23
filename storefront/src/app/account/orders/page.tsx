@@ -8,20 +8,24 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { listOrders } from "@/lib/medusa/customer";
 import { formatPrice } from "@/lib/format-price";
 
+interface OrderSummary {
+  id: string;
+  display_id: number;
+  created_at: string;
+  status: string;
+  total: number;
+  currency_code: string;
+}
+
 export default function OrdersPage() {
-  const [orders, setOrders] = useState<Array<{
-    id: string;
-    display_id: number;
-    created_at: string;
-    status: string;
-    total: number;
-    currency_code: string;
-  }>>([]);
+  const [orders, setOrders] = useState<OrderSummary[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     listOrders()
-      .then(({ orders: fetchedOrders }) => setOrders(fetchedOrders ?? []))
+      .then(({ orders: fetchedOrders }) =>
+        setOrders((fetchedOrders ?? []) as unknown as OrderSummary[])
+      )
       .catch(() => setOrders([]))
       .finally(() => setLoading(false));
   }, []);

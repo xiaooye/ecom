@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
+import { ContactForm } from "@/components/shared/contact-form";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -17,38 +15,11 @@ export default function ContactPage() {
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Contact Us</h1>
 
       <div className="mt-8 grid grid-cols-1 gap-12 md:grid-cols-2">
-        {/* Contact form */}
         <div>
           <h2 className="text-lg font-semibold">Send us a message</h2>
-          <form className="mt-4 space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="Your name" />
-              </div>
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="your@email.com" />
-              </div>
-            </div>
-            <div>
-              <Label htmlFor="subject">Subject</Label>
-              <Input id="subject" placeholder="How can we help?" />
-            </div>
-            <div>
-              <Label htmlFor="message">Message</Label>
-              <textarea
-                id="message"
-                rows={5}
-                placeholder="Tell us more..."
-                className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              />
-            </div>
-            <Button type="submit">Send Message</Button>
-          </form>
+          <ContactForm />
         </div>
 
-        {/* Contact info */}
         <div>
           <h2 className="text-lg font-semibold">Get in touch</h2>
           <div className="mt-4 space-y-6">

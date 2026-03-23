@@ -14,7 +14,24 @@ import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 
 export default function CartPage() {
   const cartId = useCartStore((s) => s.cartId);
-  const [cart, setCart] = useState<Awaited<ReturnType<typeof getCart>>["cart"] | null>(null);
+  interface CartData {
+    items?: Array<{
+      id: string;
+      title: string;
+      quantity: number;
+      thumbnail?: string | null;
+      variant?: { title?: string };
+      unit_price: number;
+      total: number;
+      product?: { handle?: string };
+    }>;
+    currency_code?: string;
+    subtotal?: number;
+    shipping_total?: number;
+    tax_total?: number;
+    total?: number;
+  }
+  const [cart, setCart] = useState<CartData | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchCart = useCallback(async () => {
@@ -24,7 +41,7 @@ export default function CartPage() {
     }
     try {
       const { cart: fetchedCart } = await getCart(cartId);
-      setCart(fetchedCart);
+      setCart(fetchedCart as unknown as CartData);
     } catch {
       setCart(null);
     } finally {

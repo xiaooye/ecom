@@ -8,6 +8,7 @@ import { PaginationControls } from "@/components/product/pagination-controls";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ITEMS_PER_PAGE } from "@/lib/constants";
+import type { Product } from "@/lib/types";
 
 interface CategoryPageProps {
   params: Promise<{ handle: string }>;
@@ -41,18 +42,7 @@ async function CategoryProducts({
   const offset = Number(params.offset || "0");
   const order = (params.order as string) || "created_at";
 
-  let products: Array<{
-    id: string;
-    title: string;
-    handle: string;
-    thumbnail?: string | null;
-    variants?: Array<{
-      calculated_price?: {
-        calculated_amount?: number;
-        currency_code?: string;
-      };
-    }>;
-  }> = [];
+  let products: Product[] = [];
   let count = 0;
 
   try {
@@ -62,7 +52,7 @@ async function CategoryProducts({
       order,
       category_id: [categoryId],
     });
-    products = response.products ?? [];
+    products = (response.products ?? []) as Product[];
     count = response.count ?? 0;
   } catch {
     // Backend not available

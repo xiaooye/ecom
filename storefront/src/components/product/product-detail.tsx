@@ -7,35 +7,14 @@ import { AddToCart } from "./add-to-cart";
 import { WishlistButton } from "./wishlist-button";
 import { formatPrice } from "@/lib/format-price";
 import { Separator } from "@/components/ui/separator";
+import type { Product } from "@/lib/types";
 
 interface ProductDetailProps {
-  product: {
-    id: string;
-    title: string;
-    description?: string | null;
-    images?: Array<{ url: string }>;
-    options?: Array<{
-      id: string;
-      title: string;
-      values: Array<{ value: string }>;
-    }>;
-    variants?: Array<{
-      id: string;
-      title: string;
-      sku?: string | null;
-      options?: Record<string, string>;
-      inventory_quantity?: number;
-      calculated_price?: {
-        calculated_amount?: number;
-        currency_code?: string;
-      };
-    }>;
-  };
+  product: Product;
 }
 
 export function ProductDetail({ product }: ProductDetailProps) {
   const options = product.options ?? [];
-  const variants = product.variants ?? [];
   const images = product.images ?? [];
 
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(
@@ -51,13 +30,14 @@ export function ProductDetail({ product }: ProductDetailProps) {
   );
 
   const selectedVariant = useMemo(() => {
+    const variants = product.variants ?? [];
     return variants.find((v) => {
       if (!v.options) return false;
       return Object.entries(selectedOptions).every(
         ([key, value]) => v.options![key] === value
       );
     });
-  }, [variants, selectedOptions]);
+  }, [product.variants, selectedOptions]);
 
   const price = selectedVariant?.calculated_price;
   const inStock = (selectedVariant?.inventory_quantity ?? 0) > 0;

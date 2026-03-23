@@ -17,7 +17,7 @@ export function CartCount() {
     getCart(cartId)
       .then((res) => {
         const items = res.cart?.items ?? [];
-        setCount(items.reduce((sum, item) => sum + item.quantity, 0));
+        setCount(items.reduce((sum: number, item: { quantity: number }) => sum + item.quantity, 0));
       })
       .catch(() => setCount(0));
   }, [cartId]);

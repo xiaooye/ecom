@@ -2,24 +2,14 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getProductsList } from "@/lib/medusa/products";
 import { ProductCard } from "@/components/product/product-card";
+import type { Product } from "@/lib/types";
 
 export async function FeaturedProducts() {
-  let products: Array<{
-    id: string;
-    title: string;
-    handle: string;
-    thumbnail?: string | null;
-    variants?: Array<{
-      calculated_price?: {
-        calculated_amount?: number;
-        currency_code?: string;
-      };
-    }>;
-  }> = [];
+  let products: Product[] = [];
 
   try {
     const response = await getProductsList({ limit: 8 });
-    products = response.products ?? [];
+    products = (response.products ?? []) as Product[];
   } catch {
     // Medusa backend not available yet — render empty
   }

@@ -106,7 +106,7 @@ export function CheckoutForm() {
 
         const options = await getShippingOptions(cartId);
         setShippingOptions(
-          (options.shipping_options ?? []).map((o) => ({
+          (options.shipping_options ?? []).map((o: { id: string; name: string; amount?: number }) => ({
             id: o.id,
             name: o.name,
             amount: o.amount ?? 0,

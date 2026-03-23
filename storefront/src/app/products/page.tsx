@@ -7,6 +7,7 @@ import { PaginationControls } from "@/components/product/pagination-controls";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ITEMS_PER_PAGE } from "@/lib/constants";
+import type { Product } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "Shop All Products",
@@ -24,18 +25,7 @@ async function ProductsContent({ searchParams }: ProductsPageProps) {
   const q = params.q as string | undefined;
   const categoryId = params.category_id as string | undefined;
 
-  let products: Array<{
-    id: string;
-    title: string;
-    handle: string;
-    thumbnail?: string | null;
-    variants?: Array<{
-      calculated_price?: {
-        calculated_amount?: number;
-        currency_code?: string;
-      };
-    }>;
-  }> = [];
+  let products: Product[] = [];
   let count = 0;
 
   try {
@@ -46,7 +36,7 @@ async function ProductsContent({ searchParams }: ProductsPageProps) {
       q,
       ...(categoryId ? { category_id: [categoryId] } : {}),
     });
-    products = response.products ?? [];
+    products = (response.products ?? []) as Product[];
     count = response.count ?? 0;
   } catch {
     // Backend not available

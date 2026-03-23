@@ -6,6 +6,7 @@ import { ProductCard } from "@/components/product/product-card";
 import { ProductJsonLd } from "@/components/shared/product-json-ld";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { Separator } from "@/components/ui/separator";
+import type { Product } from "@/lib/types";
 
 interface ProductPageProps {
   params: Promise<{ handle: string }>;
@@ -49,10 +50,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const price = product.variants?.[0]?.calculated_price;
 
   // Fetch related products
-  let relatedProducts: typeof product[] = [];
+  let relatedProducts: Product[] = [];
   try {
     const response = await getProductsList({ limit: 4 });
-    relatedProducts = (response.products ?? []).filter(
+    relatedProducts = ((response.products ?? []) as unknown as Product[]).filter(
       (p) => p.id !== product.id
     ).slice(0, 4);
   } catch {
@@ -69,16 +70,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
       />
 
       <div className="mt-6">
-        <ProductDetail product={product} />
+        <ProductDetail product={product as unknown as Product} />
       </div>
 
       <ProductJsonLd
         name={product.title}
         description={product.description || ""}
-        image={(product.images ?? []).map((img) => img.url)}
+        image={(product.images ?? []).map((img: { url: string }) => img.url)}
         sku={product.variants?.[0]?.sku || undefined}
         price={price?.calculated_amount ?? undefined}
-        currency={price?.currency_code}
+        currency={price?.currency_code || undefined}
         url={`/products/${handle}`}
       />
 

@@ -21,13 +21,13 @@ import {
 
 interface Address {
   id: string;
-  first_name?: string;
-  last_name?: string;
-  address_1?: string;
-  city?: string;
-  province?: string;
-  postal_code?: string;
-  country_code?: string;
+  first_name?: string | null;
+  last_name?: string | null;
+  address_1?: string | null;
+  city?: string | null;
+  province?: string | null;
+  postal_code?: string | null;
+  country_code?: string | null;
 }
 
 export default function AddressesPage() {

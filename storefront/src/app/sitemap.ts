@@ -19,7 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     const { products } = await getProductsList({ limit: 1000 });
-    productPages = (products ?? []).map((product) => ({
+    productPages = (products ?? []).map((product: { handle: string }) => ({
       url: `${BASE_URL}/products/${product.handle}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
@@ -31,7 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     const { product_categories } = await getProductCategories();
-    categoryPages = (product_categories ?? []).map((cat) => ({
+    categoryPages = (product_categories ?? []).map((cat: { handle: string }) => ({
       url: `${BASE_URL}/categories/${cat.handle}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,

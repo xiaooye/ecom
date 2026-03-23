@@ -10,6 +10,25 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getOrder } from "@/lib/medusa/customer";
 import { formatPrice } from "@/lib/format-price";
 
+interface OrderItem {
+  id: string;
+  title: string;
+  quantity: number;
+  total: number;
+}
+
+interface Order {
+  display_id: number;
+  status: string;
+  created_at: string;
+  currency_code: string;
+  items: OrderItem[];
+  subtotal: number;
+  shipping_total: number;
+  tax_total: number;
+  total: number;
+}
+
 export default function OrderDetailPage({
   params,
 }: {
@@ -17,12 +36,14 @@ export default function OrderDetailPage({
 }) {
   const { id } = use(params);
   const router = useRouter();
-  const [order, setOrder] = useState<Awaited<ReturnType<typeof getOrder>>["order"] | null>(null);
+  const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getOrder(id)
-      .then(({ order: fetchedOrder }) => setOrder(fetchedOrder))
+      .then(({ order: fetchedOrder }) =>
+        setOrder(fetchedOrder as unknown as Order)
+      )
       .catch(() => router.push("/account/orders"))
       .finally(() => setLoading(false));
   }, [id, router]);

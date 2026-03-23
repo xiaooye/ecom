@@ -1,24 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { formatPrice } from "@/lib/format-price";
+import type { Product } from "@/lib/types";
 
 interface ProductCardProps {
-  product: {
-    id: string;
-    title: string;
-    handle: string;
-    thumbnail?: string | null;
-    variants?: Array<{
-      calculated_price?: {
-        calculated_amount?: number;
-        currency_code?: string;
-      };
-    }>;
-  };
+  product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const price = product.variants?.[0]?.calculated_price;
+  const variants = product.variants ?? [];
+  const price = variants[0]?.calculated_price;
 
   return (
     <Link href={`/products/${product.handle}`} className="group">
