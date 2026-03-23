@@ -10,6 +10,7 @@ import { InstagramFeed } from "@/components/home/instagram-feed";
 import { BrandsMarquee } from "@/components/home/brands-marquee";
 import { FeaturesGrid } from "@/components/home/features-grid";
 import { CollectionBanner } from "@/components/home/collection-banner";
+import { LookbookGrid } from "@/components/home/lookbook-grid";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function ProductsSkeleton() {
@@ -43,6 +44,7 @@ export default function HomePage() {
       <StatsSection />
       <Testimonials />
       <FeaturesGrid />
+      <LookbookGrid />
       <InstagramFeed />
       <NewsletterCta />
     </>
