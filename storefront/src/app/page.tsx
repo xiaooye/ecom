@@ -7,6 +7,8 @@ import { Testimonials } from "@/components/home/testimonials";
 import { StatsSection } from "@/components/home/stats-section";
 import { NewsletterCta } from "@/components/home/newsletter-cta";
 import { InstagramFeed } from "@/components/home/instagram-feed";
+import { BrandsMarquee } from "@/components/home/brands-marquee";
+import { FeaturesGrid } from "@/components/home/features-grid";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function ProductsSkeleton() {
@@ -30,6 +32,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <BrandsMarquee />
       <TrustBadges />
       <CategoryGrid />
       <Suspense fallback={<ProductsSkeleton />}>
@@ -37,6 +40,7 @@ export default function HomePage() {
       </Suspense>
       <StatsSection />
       <Testimonials />
+      <FeaturesGrid />
       <InstagramFeed />
       <NewsletterCta />
     </>
