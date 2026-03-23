@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/sheet";
 import { STORE_NAME } from "@/lib/constants";
 import { CartCount } from "@/components/layout/cart-count";
+import { SearchDialog } from "@/components/layout/search-dialog";
 
 const navLinks = [
   { href: "/products", label: "Shop" },
@@ -63,7 +64,8 @@ export function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
-          <Link href="/search">
+          <SearchDialog />
+          <Link href="/search" className="md:hidden">
             <Button variant="ghost" size="icon">
               <Search className="h-5 w-5" />
               <span className="sr-only">Search</span>
