@@ -13,6 +13,7 @@ import { ScrollToTop } from "@/components/shared/scroll-to-top";
 import { ScrollProgress } from "@/components/shared/scroll-progress";
 import { CookieConsent } from "@/components/shared/cookie-consent";
 import { CompareBar } from "@/components/shared/compare-bar";
+import { LenisScroll } from "@/components/layout/lenis-scroll";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -65,6 +66,7 @@ export default async function RootLayout({
             >
               Skip to content
             </a>
+            <LenisScroll />
             <div className="flex min-h-screen flex-col">
               <AnnouncementBar />
               <Header />
