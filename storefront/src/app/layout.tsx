@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { Toaster } from "sonner";
 import { Providers } from "@/components/layout/providers";
+import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { CartSheet } from "@/components/layout/cart-sheet";
@@ -40,6 +41,7 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <Providers>
             <div className="flex min-h-screen flex-col">
+              <AnnouncementBar />
               <Header />
               <main className="flex-1 pb-16 md:pb-0">{children}</main>
               <Footer />

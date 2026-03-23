@@ -1,5 +1,9 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Search, ShoppingBag, User, Menu } from "lucide-react";
+import { Search, ShoppingBag, User, Menu, Heart } from "lucide-react";
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -11,16 +15,36 @@ import { CartCount } from "@/components/layout/cart-count";
 import { SearchDialog } from "@/components/layout/search-dialog";
 
 const navLinks = [
-  { href: "/products", label: "Shop" },
+  { href: "/products", label: "Shop All" },
   { href: "/categories/shirts", label: "Shirts" },
   { href: "/categories/pants", label: "Pants" },
   { href: "/categories/sweatshirts", label: "Sweatshirts" },
 ];
 
 export function Header() {
+  const [hidden, setHidden] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    if (latest > previous && latest > 150) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  });
+
+  // Prevent hydration mismatch
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <motion.header
+      className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-lg supports-[backdrop-filter]:bg-background/80"
+      animate={mounted ? { y: hidden ? "-100%" : 0 } : {}}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+    >
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Mobile menu */}
         <Sheet>
           <SheetTrigger asChild>
@@ -45,7 +69,7 @@ export function Header() {
         </Sheet>
 
         {/* Logo */}
-        <Link href="/" className="text-xl font-bold tracking-tight">
+        <Link href="/" className="text-lg font-bold tracking-tight sm:text-xl">
           {STORE_NAME}
         </Link>
 
@@ -55,7 +79,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              className="relative text-sm font-medium text-muted-foreground transition-colors hover:text-primary after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all hover:after:w-full"
             >
               {link.label}
             </Link>
@@ -63,29 +87,35 @@ export function Header() {
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <SearchDialog />
           <Link href="/search" className="md:hidden">
-            <Button variant="ghost" size="icon">
-              <Search className="h-5 w-5" />
+            <Button variant="ghost" size="icon" className="h-9 w-9">
+              <Search className="h-4 w-4" />
               <span className="sr-only">Search</span>
             </Button>
           </Link>
+          <Link href="/wishlist" className="hidden sm:inline-flex">
+            <Button variant="ghost" size="icon" className="h-9 w-9">
+              <Heart className="h-4 w-4" />
+              <span className="sr-only">Wishlist</span>
+            </Button>
+          </Link>
           <Link href="/account">
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
+            <Button variant="ghost" size="icon" className="h-9 w-9">
+              <User className="h-4 w-4" />
               <span className="sr-only">Account</span>
             </Button>
           </Link>
           <Link href="/cart">
-            <Button variant="ghost" size="icon" className="relative">
-              <ShoppingBag className="h-5 w-5" />
+            <Button variant="ghost" size="icon" className="relative h-9 w-9">
+              <ShoppingBag className="h-4 w-4" />
               <CartCount />
               <span className="sr-only">Cart</span>
             </Button>
           </Link>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }
