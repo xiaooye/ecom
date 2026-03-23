@@ -8,6 +8,8 @@ import { QuantitySelector } from "./quantity-selector";
 import { WishlistButton } from "./wishlist-button";
 import { ProductTabs } from "./product-tabs";
 import { ShareButtons } from "./share-buttons";
+import { SizeChartModal } from "./size-chart-modal";
+import { BackInStock } from "./back-in-stock";
 import { formatPrice } from "@/lib/format-price";
 import { Separator } from "@/components/ui/separator";
 import type { Product } from "@/lib/types";
@@ -70,24 +72,32 @@ export function ProductDetail({ product }: ProductDetailProps) {
         {options.length > 0 && (
           <>
             <Separator />
-            <VariantSelector
-              options={options}
-              selectedOptions={selectedOptions}
-              onOptionChange={handleOptionChange}
-            />
+            <div className="flex items-end justify-between">
+              <VariantSelector
+                options={options}
+                selectedOptions={selectedOptions}
+                onOptionChange={handleOptionChange}
+              />
+            </div>
+            <SizeChartModal />
           </>
         )}
 
         <Separator />
 
-        <QuantitySelector value={quantity} onChange={setQuantity} />
-
-        <AddToCart
-          variantId={selectedVariant?.id ?? null}
-          available={inStock}
-          productTitle={product.title}
-          quantity={quantity}
-        />
+        {inStock ? (
+          <>
+            <QuantitySelector value={quantity} onChange={setQuantity} />
+            <AddToCart
+              variantId={selectedVariant?.id ?? null}
+              available={inStock}
+              productTitle={product.title}
+              quantity={quantity}
+            />
+          </>
+        ) : (
+          <BackInStock />
+        )}
 
         <WishlistButton
           product={{
