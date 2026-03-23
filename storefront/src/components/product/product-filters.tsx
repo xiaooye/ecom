@@ -27,6 +27,8 @@ const sortOptions = [
   { value: "-created_at", label: "Oldest" },
   { value: "title", label: "Name A-Z" },
   { value: "-title", label: "Name Z-A" },
+  { value: "variants.prices.amount", label: "Price: Low to High" },
+  { value: "-variants.prices.amount", label: "Price: High to Low" },
 ];
 
 export function ProductFilters() {
