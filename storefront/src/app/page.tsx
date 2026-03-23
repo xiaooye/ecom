@@ -4,6 +4,7 @@ import { CategoryGrid } from "@/components/home/category-grid";
 import { FeaturedProducts } from "@/components/home/featured-products";
 import { TrustBadges } from "@/components/home/trust-badges";
 import { Testimonials } from "@/components/home/testimonials";
+import { StatsSection } from "@/components/home/stats-section";
 import { NewsletterCta } from "@/components/home/newsletter-cta";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -33,6 +34,7 @@ export default function HomePage() {
       <Suspense fallback={<ProductsSkeleton />}>
         <FeaturedProducts />
       </Suspense>
+      <StatsSection />
       <Testimonials />
       <NewsletterCta />
     </>
