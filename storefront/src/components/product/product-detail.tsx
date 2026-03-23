@@ -7,6 +7,7 @@ import { AddToCart } from "./add-to-cart";
 import { QuantitySelector } from "./quantity-selector";
 import { WishlistButton } from "./wishlist-button";
 import { ProductTabs } from "./product-tabs";
+import { ShareButtons } from "./share-buttons";
 import { formatPrice } from "@/lib/format-price";
 import { Separator } from "@/components/ui/separator";
 import type { Product } from "@/lib/types";
@@ -55,7 +56,10 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
       <div className="flex flex-col gap-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">{product.title}</h1>
+          <div className="flex items-start justify-between gap-4">
+            <h1 className="text-3xl font-bold tracking-tight">{product.title}</h1>
+            <ShareButtons title={product.title} handle={product.handle} />
+          </div>
           {price && (
             <p className="mt-2 text-2xl">
               {formatPrice(price.calculated_amount, price.currency_code)}
