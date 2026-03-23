@@ -1,0 +1,120 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import { ProductGallery } from "./product-gallery";
+import { VariantSelector } from "./variant-selector";
+import { AddToCart } from "./add-to-cart";
+import { formatPrice } from "@/lib/format-price";
+import { Separator } from "@/components/ui/separator";
+
+interface ProductDetailProps {
+  product: {
+    id: string;
+    title: string;
+    description?: string | null;
+    images?: Array<{ url: string }>;
+    options?: Array<{
+      id: string;
+      title: string;
+      values: Array<{ value: string }>;
+    }>;
+    variants?: Array<{
+      id: string;
+      title: string;
+      sku?: string | null;
+      options?: Record<string, string>;
+      inventory_quantity?: number;
+      calculated_price?: {
+        calculated_amount?: number;
+        currency_code?: string;
+      };
+    }>;
+  };
+}
+
+export function ProductDetail({ product }: ProductDetailProps) {
+  const options = product.options ?? [];
+  const variants = product.variants ?? [];
+  const images = product.images ?? [];
+
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(
+    () => {
+      const initial: Record<string, string> = {};
+      options.forEach((opt) => {
+        if (opt.values.length > 0) {
+          initial[opt.title] = opt.values[0].value;
+        }
+      });
+      return initial;
+    }
+  );
+
+  const selectedVariant = useMemo(() => {
+    return variants.find((v) => {
+      if (!v.options) return false;
+      return Object.entries(selectedOptions).every(
+        ([key, value]) => v.options![key] === value
+      );
+    });
+  }, [variants, selectedOptions]);
+
+  const price = selectedVariant?.calculated_price;
+  const inStock = (selectedVariant?.inventory_quantity ?? 0) > 0;
+
+  const handleOptionChange = (title: string, value: string) => {
+    setSelectedOptions((prev) => ({ ...prev, [title]: value }));
+  };
+
+  return (
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+      <ProductGallery images={images} title={product.title} />
+
+      <div className="flex flex-col gap-6">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">{product.title}</h1>
+          {price && (
+            <p className="mt-2 text-2xl">
+              {formatPrice(price.calculated_amount, price.currency_code)}
+            </p>
+          )}
+        </div>
+
+        {options.length > 0 && (
+          <>
+            <Separator />
+            <VariantSelector
+              options={options}
+              selectedOptions={selectedOptions}
+              onOptionChange={handleOptionChange}
+            />
+          </>
+        )}
+
+        <Separator />
+
+        <AddToCart
+          variantId={selectedVariant?.id ?? null}
+          available={inStock}
+        />
+
+        {selectedVariant?.sku && (
+          <p className="text-sm text-muted-foreground">
+            SKU: {selectedVariant.sku}
+          </p>
+        )}
+
+        {product.description && (
+          <>
+            <Separator />
+            <div>
+              <h2 className="text-lg font-semibold">Description</h2>
+              <p className="mt-2 text-muted-foreground leading-relaxed">
+                {product.description}
+              </p>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
