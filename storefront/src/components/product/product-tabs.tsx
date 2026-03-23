@@ -2,6 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RatingStars } from "@/components/shared/rating-stars";
+import { ProductQA } from "./product-qa";
 
 interface ProductTabsProps {
   description?: string | null;
@@ -34,6 +35,12 @@ export function ProductTabs({
           className="rounded-none border-b-2 border-transparent px-6 pb-3 pt-2 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none"
         >
           Reviews
+        </TabsTrigger>
+        <TabsTrigger
+          value="qa"
+          className="rounded-none border-b-2 border-transparent px-6 pb-3 pt-2 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+        >
+          Q&A
         </TabsTrigger>
       </TabsList>
 
@@ -95,6 +102,10 @@ export function ProductTabs({
             ))}
           </div>
         </div>
+      </TabsContent>
+
+      <TabsContent value="qa" className="mt-6">
+        <ProductQA />
       </TabsContent>
     </Tabs>
   );
