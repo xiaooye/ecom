@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { formatPrice } from "@/lib/format-price";
 import { useWishlistStore } from "@/stores/wishlist-store";
 import { QuickView, QuickViewTrigger } from "./quick-view";
+import { ProductBadge } from "./product-badge";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/types";
 
@@ -21,6 +22,14 @@ export function ProductCard({ product }: ProductCardProps) {
   const price = variants[0]?.calculated_price;
   const { isInWishlist, toggleItem } = useWishlistStore();
   const inWishlist = isInWishlist(product.id);
+
+  // Determine badge
+  const allOutOfStock = variants.length > 0 && variants.every(
+    (v) => (v.inventory_quantity ?? 0) <= 0
+  );
+  const isNew = product.created_at
+    ? Date.now() - new Date(product.created_at as string).getTime() < 14 * 86400000
+    : false;
 
   const handleWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -41,6 +50,9 @@ export function ProductCard({ product }: ProductCardProps) {
         whileHover={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       >
+        {allOutOfStock && <ProductBadge variant="out-of-stock" />}
+        {!allOutOfStock && isNew && <ProductBadge variant="new" />}
+
         {product.thumbnail ? (
           <Image
             src={product.thumbnail}

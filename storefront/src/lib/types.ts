@@ -8,6 +8,7 @@ export interface Product {
   handle: string;
   description?: string | null;
   thumbnail?: string | null;
+  created_at?: string | Date | null;
   images?: Array<{ url: string }> | null;
   options?: Array<{
     id: string;
