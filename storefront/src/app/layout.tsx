@@ -16,6 +16,8 @@ import { CompareBar } from "@/components/shared/compare-bar";
 import { LenisScroll } from "@/components/layout/lenis-scroll";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { KeyboardShortcuts } from "@/components/shared/keyboard-shortcuts";
+import { CurrencySelector } from "@/components/shared/currency-selector";
 import "./globals.css";
 
 const inter = Inter({
@@ -75,6 +77,7 @@ export default async function RootLayout({
               <MobileNav />
             </div>
             <CartSheet />
+            <KeyboardShortcuts />
             <ScrollToTop />
             <ScrollProgress />
             <CompareBar />
