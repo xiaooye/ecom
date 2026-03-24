@@ -21,7 +21,6 @@ export function SpinViewer({ images, className }: SpinViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const totalFrames = images.length;
-  if (totalFrames === 0) return null;
 
   const handleStart = useCallback((clientX: number) => {
     setIsDragging(true);
@@ -50,6 +49,8 @@ export function SpinViewer({ images, className }: SpinViewerProps) {
   const handleEnd = useCallback(() => {
     setIsDragging(false);
   }, []);
+
+  if (totalFrames === 0) return null;
 
   return (
     <div
