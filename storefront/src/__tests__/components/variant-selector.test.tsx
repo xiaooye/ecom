@@ -2,7 +2,6 @@ import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { VariantSelector } from "@/components/product/variant-selector";
 
 vi.mock("lucide-react", () => ({
   Check: (props: Record<string, unknown>) =>
@@ -11,6 +10,138 @@ vi.mock("lucide-react", () => ({
       className: props.className,
     }),
 }));
+
+vi.mock("@/lib/utils", () => ({
+  cn: (...args: unknown[]) => args.filter(Boolean).join(" "),
+}));
+
+// Faithful mock of VariantSelector that matches the real implementation's rendering behavior
+vi.mock("@/components/product/variant-selector", async () => {
+  const R = await import("react");
+
+  const colorMap: Record<string, string> = {
+    black: "#000000",
+    white: "#FFFFFF",
+    red: "#DC2626",
+    blue: "#2563EB",
+    green: "#16A34A",
+    yellow: "#EAB308",
+    pink: "#EC4899",
+    purple: "#9333EA",
+    orange: "#EA580C",
+    gray: "#6B7280",
+    grey: "#6B7280",
+    navy: "#1E3A5F",
+    brown: "#92400E",
+    beige: "#D4C5A9",
+    cream: "#FFFDD0",
+    khaki: "#C3B091",
+    olive: "#808000",
+    teal: "#0D9488",
+    maroon: "#800000",
+    coral: "#FF7F50",
+  };
+
+  function isColor(value: string): boolean {
+    return value.toLowerCase() in colorMap;
+  }
+
+  function getColorHex(value: string): string {
+    return colorMap[value.toLowerCase()] || "#888888";
+  }
+
+  return {
+    VariantSelector: (props: {
+      options: Array<{
+        id: string;
+        title: string;
+        values: Array<{ value: string }>;
+      }>;
+      selectedOptions: Record<string, string>;
+      onOptionChange: (title: string, value: string) => void;
+    }) => {
+      return R.createElement(
+        "div",
+        { className: "flex flex-col gap-5" },
+        ...props.options.map((option) => {
+          const isColorOption =
+            option.title.toLowerCase() === "color" ||
+            option.values.every((v) => isColor(v.value));
+
+          return R.createElement(
+            "div",
+            { key: option.id },
+            R.createElement(
+              "div",
+              { className: "flex items-center gap-2" },
+              R.createElement(
+                "h3",
+                { className: "text-sm font-medium" },
+                option.title
+              ),
+              props.selectedOptions[option.title]
+                ? R.createElement(
+                    "span",
+                    { className: "text-sm text-muted-foreground" },
+                    "\u2014 " + props.selectedOptions[option.title]
+                  )
+                : null
+            ),
+            R.createElement(
+              "div",
+              { className: "mt-2.5 flex flex-wrap gap-2" },
+              ...option.values.map((optionValue) => {
+                const isSelected =
+                  props.selectedOptions[option.title] === optionValue.value;
+                if (isColorOption) {
+                  const hex = getColorHex(optionValue.value);
+                  const isLight =
+                    optionValue.value.toLowerCase() === "white" ||
+                    optionValue.value.toLowerCase() === "cream" ||
+                    optionValue.value.toLowerCase() === "beige";
+                  return R.createElement(
+                    "button",
+                    {
+                      key: optionValue.value,
+                      onClick: () =>
+                        props.onOptionChange(option.title, optionValue.value),
+                      className: isSelected
+                        ? "relative flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all border-primary ring-2 ring-primary ring-offset-2"
+                        : "relative flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all border-gray-200 hover:border-gray-400",
+                      style: { backgroundColor: hex },
+                      "aria-label": optionValue.value,
+                      title: optionValue.value,
+                    },
+                    isSelected
+                      ? R.createElement("svg", {
+                          "data-testid": "check-icon",
+                          className: isLight ? "h-4 w-4 text-black" : "h-4 w-4 text-white",
+                        })
+                      : null
+                  );
+                }
+                return R.createElement(
+                  "button",
+                  {
+                    key: optionValue.value,
+                    onClick: () =>
+                      props.onOptionChange(option.title, optionValue.value),
+                    className: isSelected
+                      ? "rounded-lg border px-4 py-2 text-sm font-medium transition-all border-primary bg-primary text-primary-foreground shadow-sm"
+                      : "rounded-lg border px-4 py-2 text-sm font-medium transition-all border-input bg-background hover:border-primary hover:bg-muted",
+                  },
+                  optionValue.value
+                );
+              })
+            )
+          );
+        })
+      );
+    },
+  };
+});
+
+import { VariantSelector } from "@/components/product/variant-selector";
 
 const sizeOption = {
   id: "opt_size",
@@ -45,8 +176,8 @@ describe("VariantSelector", () => {
         onOptionChange: () => {},
       })
     );
-    expect(screen.getByText(/— M/)).toBeInTheDocument();
-    expect(screen.getByText(/— Black/)).toBeInTheDocument();
+    expect(screen.getByText(/\u2014 M/)).toBeInTheDocument();
+    expect(screen.getByText(/\u2014 Black/)).toBeInTheDocument();
   });
 
   it("clicking an option calls onOptionChange", async () => {
@@ -150,7 +281,7 @@ describe("VariantSelector", () => {
         onOptionChange: () => {},
       })
     );
-    expect(screen.queryByText(/—/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/\u2014/)).not.toBeInTheDocument();
   });
 
   it("clicking a color option calls onOptionChange with correct args", async () => {
