@@ -15,4 +15,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Suppress the CJS deprecation warning and ensure JSX works
+  esbuild: {
+    jsx: "automatic",
+  },
 });

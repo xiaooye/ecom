@@ -1,13 +1,15 @@
+import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { VariantSelector } from "@/components/product/variant-selector";
 
-// Mock lucide-react Check icon
 vi.mock("lucide-react", () => ({
-  Check: ({ className, ...props }: Record<string, unknown>) => (
-    <svg data-testid="check-icon" className={className as string} {...props} />
-  ),
+  Check: (props: Record<string, unknown>) =>
+    React.createElement("svg", {
+      "data-testid": "check-icon",
+      className: props.className,
+    }),
 }));
 
 const sizeOption = {
@@ -25,26 +27,24 @@ const colorOption = {
 describe("VariantSelector", () => {
   it("renders all option groups (Size, Color)", () => {
     render(
-      <VariantSelector
-        options={[sizeOption, colorOption]}
-        selectedOptions={{}}
-        onOptionChange={() => {}}
-      />
+      React.createElement(VariantSelector, {
+        options: [sizeOption, colorOption],
+        selectedOptions: {},
+        onOptionChange: () => {},
+      })
     );
-
     expect(screen.getByText("Size")).toBeInTheDocument();
     expect(screen.getByText("Color")).toBeInTheDocument();
   });
 
   it("shows selected value next to option title", () => {
     render(
-      <VariantSelector
-        options={[sizeOption, colorOption]}
-        selectedOptions={{ Size: "M", Color: "Black" }}
-        onOptionChange={() => {}}
-      />
+      React.createElement(VariantSelector, {
+        options: [sizeOption, colorOption],
+        selectedOptions: { Size: "M", Color: "Black" },
+        onOptionChange: () => {},
+      })
     );
-
     expect(screen.getByText(/— M/)).toBeInTheDocument();
     expect(screen.getByText(/— Black/)).toBeInTheDocument();
   });
@@ -54,25 +54,24 @@ describe("VariantSelector", () => {
     const onOptionChange = vi.fn();
 
     render(
-      <VariantSelector
-        options={[sizeOption]}
-        selectedOptions={{}}
-        onOptionChange={onOptionChange}
-      />
+      React.createElement(VariantSelector, {
+        options: [sizeOption],
+        selectedOptions: {},
+        onOptionChange,
+      })
     );
 
     await user.click(screen.getByText("L"));
-
     expect(onOptionChange).toHaveBeenCalledWith("Size", "L");
   });
 
   it("color options render as circular buttons", () => {
     render(
-      <VariantSelector
-        options={[colorOption]}
-        selectedOptions={{}}
-        onOptionChange={() => {}}
-      />
+      React.createElement(VariantSelector, {
+        options: [colorOption],
+        selectedOptions: {},
+        onOptionChange: () => {},
+      })
     );
 
     const blackButton = screen.getByRole("button", { name: "Black" });
@@ -83,11 +82,11 @@ describe("VariantSelector", () => {
 
   it("size options render as rectangular buttons", () => {
     render(
-      <VariantSelector
-        options={[sizeOption]}
-        selectedOptions={{}}
-        onOptionChange={() => {}}
-      />
+      React.createElement(VariantSelector, {
+        options: [sizeOption],
+        selectedOptions: {},
+        onOptionChange: () => {},
+      })
     );
 
     const sButton = screen.getByText("S");
@@ -98,29 +97,28 @@ describe("VariantSelector", () => {
 
   it("selected option has primary styling", () => {
     render(
-      <VariantSelector
-        options={[sizeOption]}
-        selectedOptions={{ Size: "M" }}
-        onOptionChange={() => {}}
-      />
+      React.createElement(VariantSelector, {
+        options: [sizeOption],
+        selectedOptions: { Size: "M" },
+        onOptionChange: () => {},
+      })
     );
 
     const selectedButton = screen.getByText("M");
     expect(selectedButton.className).toContain("border-primary");
     expect(selectedButton.className).toContain("bg-primary");
 
-    // Non-selected button should not have primary bg
     const unselectedButton = screen.getByText("S");
     expect(unselectedButton.className).not.toContain("bg-primary");
   });
 
   it("renders color swatches for color-type options", () => {
     render(
-      <VariantSelector
-        options={[colorOption]}
-        selectedOptions={{}}
-        onOptionChange={() => {}}
-      />
+      React.createElement(VariantSelector, {
+        options: [colorOption],
+        selectedOptions: {},
+        onOptionChange: () => {},
+      })
     );
 
     const blackButton = screen.getByRole("button", { name: "Black" });
@@ -135,26 +133,23 @@ describe("VariantSelector", () => {
 
   it("selected color option shows check icon", () => {
     render(
-      <VariantSelector
-        options={[colorOption]}
-        selectedOptions={{ Color: "Black" }}
-        onOptionChange={() => {}}
-      />
+      React.createElement(VariantSelector, {
+        options: [colorOption],
+        selectedOptions: { Color: "Black" },
+        onOptionChange: () => {},
+      })
     );
-
     expect(screen.getByTestId("check-icon")).toBeInTheDocument();
   });
 
   it("does not show selected value when none is selected", () => {
     render(
-      <VariantSelector
-        options={[sizeOption]}
-        selectedOptions={{}}
-        onOptionChange={() => {}}
-      />
+      React.createElement(VariantSelector, {
+        options: [sizeOption],
+        selectedOptions: {},
+        onOptionChange: () => {},
+      })
     );
-
-    // The "—" separator should not appear
     expect(screen.queryByText(/—/)).not.toBeInTheDocument();
   });
 
@@ -163,15 +158,14 @@ describe("VariantSelector", () => {
     const onOptionChange = vi.fn();
 
     render(
-      <VariantSelector
-        options={[colorOption]}
-        selectedOptions={{}}
-        onOptionChange={onOptionChange}
-      />
+      React.createElement(VariantSelector, {
+        options: [colorOption],
+        selectedOptions: {},
+        onOptionChange,
+      })
     );
 
     await user.click(screen.getByRole("button", { name: "Red" }));
-
     expect(onOptionChange).toHaveBeenCalledWith("Color", "Red");
   });
 });
