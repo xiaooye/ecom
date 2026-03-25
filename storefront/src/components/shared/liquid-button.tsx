@@ -1,9 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-interface LiquidButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface LiquidButtonProps extends Omit<HTMLMotionProps<"button">, "variant"> {
   children: React.ReactNode;
   variant?: "primary" | "outline";
 }

@@ -4,9 +4,6 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  oxc: {
-    jsx: "automatic",
-  },
   test: {
     environment: "jsdom",
     globals: true,
