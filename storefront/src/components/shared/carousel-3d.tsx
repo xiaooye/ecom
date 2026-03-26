@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, type ReactNode } from "react";
+import { useEffect, useState, useRef, useCallback, type ReactNode } from "react";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -36,39 +36,47 @@ export function Carousel3D({
   const rotationY = useMotionValue(0);
   const [isDragging, setIsDragging] = useState(false);
   const dragStartRef = useRef(0);
-  const autoRef = useRef<ReturnType<typeof requestAnimationFrame>>();
-
-  /* Auto-rotation */
+  const autoFrameRef = useRef(0);
   const lastTimeRef = useRef<number | null>(null);
+  const isDraggingRef = useRef(false);
 
-  const tick = (ts: number) => {
-    if (isDragging) {
-      lastTimeRef.current = null;
-      return;
-    }
-    if (lastTimeRef.current !== null) {
-      const dt = (ts - lastTimeRef.current) / 1000;
-      rotationY.set(rotationY.get() + autoSpeed * dt);
-    }
-    lastTimeRef.current = ts;
-    autoRef.current = requestAnimationFrame(tick);
-  };
+  // Keep ref in sync for the rAF callback
+  isDraggingRef.current = isDragging;
 
-  /* Start / stop auto-rotate */
-  const startAuto = () => {
-    if (!autoRotate) return;
+  const stopAuto = useCallback(() => {
+    if (autoFrameRef.current) {
+      cancelAnimationFrame(autoFrameRef.current);
+      autoFrameRef.current = 0;
+    }
     lastTimeRef.current = null;
-    autoRef.current = requestAnimationFrame(tick);
-  };
-  const stopAuto = () => {
-    if (autoRef.current) cancelAnimationFrame(autoRef.current);
-  };
+  }, []);
 
-  /* Mount / unmount auto */
-  useState(() => {
-    if (autoRotate) startAuto();
+  const startAuto = useCallback(() => {
+    if (!autoRotate) return;
+    stopAuto();
+
+    const tick = (ts: number) => {
+      if (isDraggingRef.current) {
+        lastTimeRef.current = null;
+        return;
+      }
+      if (lastTimeRef.current !== null) {
+        const dt = (ts - lastTimeRef.current) / 1000;
+        rotationY.set(rotationY.get() + autoSpeed * dt);
+      }
+      lastTimeRef.current = ts;
+      autoFrameRef.current = requestAnimationFrame(tick);
+    };
+
+    autoFrameRef.current = requestAnimationFrame(tick);
+  }, [autoRotate, autoSpeed, rotationY, stopAuto]);
+
+  useEffect(() => {
+    if (autoRotate && !isDragging) {
+      startAuto();
+    }
     return () => stopAuto();
-  });
+  }, [autoRotate, isDragging, startAuto, stopAuto]);
 
   /* Drag handlers */
   const handleDragStart = () => {
@@ -83,12 +91,14 @@ export function Carousel3D({
 
   const handleDragEnd = (_: unknown, info: { velocity: { x: number } }) => {
     setIsDragging(false);
-    // snap to nearest item
     const momentum = info.velocity.x * 0.08;
     const raw = rotationY.get() + momentum;
     const snapped = Math.round(raw / sliceAngle) * sliceAngle;
-    animate(rotationY, snapped, { type: "spring", stiffness: 200, damping: 25 });
-    if (autoRotate) startAuto();
+    animate(rotationY, snapped, {
+      type: "spring",
+      stiffness: 200,
+      damping: 25,
+    });
   };
 
   return (
@@ -159,19 +169,25 @@ function CarouselItem({
 }: CarouselItemProps) {
   const itemRotation = useTransform(rotationY, (ry) => angle + ry);
 
-  /* Scale + opacity based on how "front-facing" the item is */
   const scale = useTransform(itemRotation, (r) => {
     const cosVal = Math.cos(((r % 360) * Math.PI) / 180);
     return 0.6 + 0.4 * Math.max(0, cosVal);
   });
+
   const opacity = useTransform(itemRotation, (r) => {
     const cosVal = Math.cos(((r % 360) * Math.PI) / 180);
     return 0.4 + 0.6 * Math.max(0, cosVal);
   });
+
   const zIndex = useTransform(itemRotation, (r) => {
     const cosVal = Math.cos(((r % 360) * Math.PI) / 180);
     return Math.round(cosVal * 100);
   });
+
+  const transformStr = useTransform(
+    itemRotation,
+    (r) => `rotateY(${r}deg) translateZ(${radius}px)`,
+  );
 
   return (
     <motion.div
@@ -181,11 +197,7 @@ function CarouselItem({
       )}
       style={{
         transformStyle: "preserve-3d",
-        transform: useTransform(
-          itemRotation,
-          (r) =>
-            `rotateY(${r}deg) translateZ(${radius}px)`,
-        ),
+        transform: transformStr,
         scale,
         opacity,
         zIndex,

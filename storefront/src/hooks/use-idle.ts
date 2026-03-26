@@ -9,7 +9,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
  */
 export function useIdle(timeout: number = 30000): boolean {
   const [idle, setIdle] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const reset = useCallback(() => {
     setIdle(false);

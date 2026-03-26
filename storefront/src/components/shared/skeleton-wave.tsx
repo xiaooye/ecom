@@ -63,7 +63,6 @@ export function SkeletonWaveGroup({
       <div className={cn("relative", className)}>
         {children}
 
-        {/* eslint-disable-next-line react/no-danger -- static CSS keyframes with auto-generated React id */}
         <style dangerouslySetInnerHTML={{ __html: keyframeCSS }} />
       </div>
     </WaveContext.Provider>

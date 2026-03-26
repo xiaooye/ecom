@@ -82,7 +82,6 @@ export function GradientMeshBg({
         );
       })}
 
-      {/* eslint-disable-next-line react/no-danger -- static CSS keyframes, no user input */}
       <style dangerouslySetInnerHTML={{ __html: keyframesCSS }} />
     </div>
   );
