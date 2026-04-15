@@ -8,12 +8,13 @@ import { demoCategories, type DemoCategory } from "@/lib/demo-categories";
 export async function listCategories(): Promise<DemoCategory[]> {
   try {
     const response = await getProductCategories();
-    const cats = response.product_categories ?? [];
-    return cats.map((c) => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cats: any[] = response.product_categories ?? [];
+    return cats.map((c: { id: string; name?: string; handle?: string; description?: string }) => ({
       id: c.id,
       name: c.name ?? "",
       handle: c.handle ?? "",
-      description: (c as unknown as Record<string, unknown>).description as string || "",
+      description: c.description ?? "",
       product_count: 0,
     }));
   } catch {
@@ -27,13 +28,14 @@ export async function getCategory(
   handle: string,
 ): Promise<DemoCategory | null> {
   try {
-    const category = await getCategoryByHandle(handle);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const category: any = await getCategoryByHandle(handle);
     if (category) {
       return {
-        id: category.id as string,
-        name: category.name as string,
-        handle: category.handle as string,
-        description: (category.description as string) || "",
+        id: category.id,
+        name: category.name ?? "",
+        handle: category.handle ?? "",
+        description: category.description ?? "",
         product_count: 0,
       };
     }
