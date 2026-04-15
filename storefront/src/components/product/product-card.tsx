@@ -59,11 +59,13 @@ export function ProductCard({ product }: ProductCardProps) {
             alt={product.title}
             width={400}
             height={533}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+            className="h-full w-full object-cover product-image-zoom"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-muted-foreground">
-            No image
+          <div className="flex h-full items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900">
+            <span className="text-4xl font-bold text-neutral-300 dark:text-neutral-600">
+              {product.title.charAt(0)}
+            </span>
           </div>
         )}
 
