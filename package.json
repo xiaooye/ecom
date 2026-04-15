@@ -1,14 +1,16 @@
 {
   "name": "webstore",
   "private": true,
-  "workspaces": [
-    "backend",
-    "storefront"
-  ],
-  "overrides": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "@types/react": "^19.1.4",
-    "@types/react-dom": "^19.1.5"
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "esbuild",
+      "sharp",
+      "protobufjs",
+      "unrs-resolver",
+      "@parcel/watcher",
+      "msgpackr-extract",
+      "@medusajs/telemetry"
+    ]
   }
 }

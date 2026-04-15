@@ -8,7 +8,7 @@ export const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.4, ease: "easeOut" },
-};
+} as const;
 
 export const staggerContainer = {
   animate: {
@@ -16,12 +16,12 @@ export const staggerContainer = {
       staggerChildren: 0.06,
     },
   },
-};
+} as const;
 
 export const staggerItem = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
-};
+} as const;
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
   return (
