@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { listProducts } from "@/lib/data/products";
 import { listCategories } from "@/lib/data/categories";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://thread.store";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://ecom.wei-dev.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = [
