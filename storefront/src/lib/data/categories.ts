@@ -5,12 +5,18 @@ import { demoCategories, type DemoCategory } from "@/lib/demo-categories";
  * Category data wrapper — Medusa SDK first, demo fallback.
  */
 
+interface CategoryLike {
+  id: string;
+  name?: string;
+  handle?: string;
+  description?: string;
+}
+
 export async function listCategories(): Promise<DemoCategory[]> {
   try {
     const response = await getProductCategories();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cats: any[] = response.product_categories ?? [];
-    return cats.map((c: { id: string; name?: string; handle?: string; description?: string }) => ({
+    const cats = (response.product_categories ?? []) as unknown as CategoryLike[];
+    return cats.map((c) => ({
       id: c.id,
       name: c.name ?? "",
       handle: c.handle ?? "",
@@ -28,8 +34,7 @@ export async function getCategory(
   handle: string,
 ): Promise<DemoCategory | null> {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const category: any = await getCategoryByHandle(handle);
+    const category = await getCategoryByHandle(handle) as unknown as CategoryLike | null;
     if (category) {
       return {
         id: category.id,
