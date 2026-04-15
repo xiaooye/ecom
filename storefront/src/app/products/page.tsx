@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { getProductsList } from "@/lib/medusa/products";
+import { listProducts } from "@/lib/data/products";
 import { ProductGrid } from "@/components/product/product-grid";
 import { ProductFilters } from "@/components/product/product-filters";
 import { PaginationControls } from "@/components/product/pagination-controls";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ITEMS_PER_PAGE } from "@/lib/constants";
-import type { Product } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "Shop All Products",
@@ -25,22 +24,13 @@ async function ProductsContent({ searchParams }: ProductsPageProps) {
   const q = params.q as string | undefined;
   const categoryId = params.category_id as string | undefined;
 
-  let products: Product[] = [];
-  let count = 0;
-
-  try {
-    const response = await getProductsList({
-      limit: ITEMS_PER_PAGE,
-      offset,
-      order,
-      q,
-      ...(categoryId ? { category_id: [categoryId] } : {}),
-    });
-    products = (response.products ?? []) as Product[];
-    count = response.count ?? 0;
-  } catch {
-    // Backend not available
-  }
+  const { products, count } = await listProducts({
+    limit: ITEMS_PER_PAGE,
+    offset,
+    order,
+    q,
+    ...(categoryId ? { category_id: [categoryId] } : {}),
+  });
 
   return (
     <>
@@ -70,7 +60,7 @@ export default function ProductsPage(props: ProductsPageProps) {
       <Breadcrumbs items={[{ label: "Shop" }]} />
 
       <div className="mt-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">All Products</h1>
+        <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">All Products</h1>
         <Suspense>
           <ProductFilters />
         </Suspense>

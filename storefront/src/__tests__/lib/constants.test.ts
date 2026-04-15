@@ -15,8 +15,8 @@ describe("constants", () => {
     expect(ITEMS_PER_PAGE).toBe(12);
   });
 
-  it('STORE_NAME is "WebStore"', () => {
-    expect(STORE_NAME).toBe("WebStore");
+  it('STORE_NAME is "THREAD"', () => {
+    expect(STORE_NAME).toBe("THREAD");
   });
 
   it("MEDUSA_BACKEND_URL has a default value", () => {

@@ -59,7 +59,7 @@ export function QuickView({ product, open, onOpenChange }: QuickViewProps) {
         <DialogTitle className="sr-only">{product.title}</DialogTitle>
         <div className="grid grid-cols-1 sm:grid-cols-2">
           {/* Image */}
-          <div className="aspect-square bg-gray-100">
+          <div className="aspect-square bg-secondary">
             {thumbnail ? (
               <Image
                 src={thumbnail}

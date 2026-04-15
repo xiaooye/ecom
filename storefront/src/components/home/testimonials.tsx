@@ -31,7 +31,7 @@ export function Testimonials() {
         viewport={{ once: true }}
         className="text-center"
       >
-        <h2 className="text-2xl font-bold tracking-tight">
+        <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
           What Our Customers Say
         </h2>
         <p className="mt-2 text-muted-foreground">

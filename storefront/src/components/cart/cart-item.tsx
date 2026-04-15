@@ -58,7 +58,7 @@ export function CartItem({ cartId, item, currencyCode, onUpdate }: CartItemProps
 
   return (
     <div className="flex gap-4 py-4">
-      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md bg-gray-100">
+      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md bg-secondary">
         {item.thumbnail ? (
           <Image
             src={item.thumbnail}

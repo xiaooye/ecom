@@ -2,15 +2,15 @@
 
 import { motion } from "framer-motion";
 
-const brands = [
-  "Premium Cotton",
-  "Organic Blend",
-  "EcoWear",
-  "UrbanStyle",
-  "Classic Fit",
-  "Heritage Denim",
-  "Modern Basics",
-  "TrueKnit",
+const certifications = [
+  "OEKO-TEX® Certified",
+  "GOTS Organic",
+  "Fair Trade",
+  "Responsible Wool",
+  "Better Cotton",
+  "WRAP Certified",
+  "bluesign®",
+  "Cradle to Cradle",
 ];
 
 export function BrandsMarquee() {
@@ -23,17 +23,17 @@ export function BrandsMarquee() {
           x: {
             repeat: Infinity,
             repeatType: "loop",
-            duration: 20,
+            duration: 25,
             ease: "linear",
           },
         }}
       >
-        {[...brands, ...brands].map((brand, i) => (
+        {[...certifications, ...certifications].map((cert, i) => (
           <span
             key={i}
-            className="text-lg font-semibold text-muted-foreground/50"
+            className="text-sm font-medium uppercase tracking-widest text-muted-foreground/40"
           >
-            {brand}
+            {cert}
           </span>
         ))}
       </motion.div>

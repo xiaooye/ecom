@@ -103,7 +103,7 @@ export function CartSheet() {
                     exit={{ opacity: 0, x: -20 }}
                     className="flex gap-3 py-3"
                   >
-                    <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
+                    <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-secondary">
                       {item.thumbnail ? (
                         <Image
                           src={item.thumbnail}

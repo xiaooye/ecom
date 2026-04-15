@@ -15,7 +15,7 @@ export default function CheckoutPage() {
           { label: "Checkout" },
         ]}
       />
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Checkout</h1>
+      <h1 className="font-display mt-6 text-2xl font-bold tracking-tight sm:text-3xl">Checkout</h1>
       <div className="mt-8">
         <CheckoutForm />
       </div>

@@ -18,8 +18,9 @@ const supportLinks = [
 ];
 
 const companyLinks = [
-  { href: "/about", label: "About Us" },
+  { href: "/about", label: "About & Architecture" },
   { href: "/privacy", label: "Privacy Policy" },
+  { href: "https://wei-dev.com", label: "Developer Portfolio", external: true },
 ];
 
 function SocialIcon({ d, label }: { d: string; label: string }) {
@@ -43,12 +44,12 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 lg:grid-cols-5">
           {/* Brand */}
           <div className="col-span-2 lg:col-span-2">
-            <Link href="/" className="text-xl font-bold tracking-tight">
+            <Link href="/" className="font-display text-xl font-bold tracking-[0.08em]">
               {STORE_NAME}
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              Quality clothing for every style. Shop the latest collections and
-              find your perfect look.
+              Thoughtfully crafted clothing in premium fabrics. Built to last,
+              made to be worn.
             </p>
             <div className="mt-5 flex gap-3">
               <SocialIcon
@@ -106,12 +107,23 @@ export function Footer() {
             <ul className="mt-4 space-y-2.5">
               {companyLinks.map((link) => (
                 <li key={link.href}>
+                  {"external" in link && link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
                   <Link
                     href={link.href}
                     className="text-sm text-muted-foreground transition-colors hover:text-primary"
                   >
                     {link.label}
                   </Link>
+                  )}
                 </li>
               ))}
             </ul>

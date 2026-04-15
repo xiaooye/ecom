@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { CartItem } from "@/components/cart/cart-item";
 import { CartSummary } from "@/components/cart/cart-summary";
 import { useCartStore } from "@/stores/cart-store";
-import { getCart } from "@/lib/medusa/cart";
+import { getCart } from "@/lib/data/cart";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 
 export default function CartPage() {
@@ -77,7 +77,7 @@ export default function CartPage() {
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-center py-16">
           <ShoppingBag className="h-16 w-16 text-muted-foreground" />
-          <h1 className="mt-4 text-2xl font-bold">Your cart is empty</h1>
+          <h1 className="font-display mt-4 text-2xl font-bold">Your cart is empty</h1>
           <p className="mt-2 text-muted-foreground">
             Looks like you haven&apos;t added anything to your cart yet.
           </p>
@@ -92,7 +92,7 @@ export default function CartPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <Breadcrumbs items={[{ label: "Cart" }]} />
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Shopping Cart</h1>
+      <h1 className="font-display mt-6 text-2xl font-bold tracking-tight sm:text-3xl">Shopping Cart</h1>
 
       <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">

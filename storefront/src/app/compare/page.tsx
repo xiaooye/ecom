@@ -17,7 +17,7 @@ export default function ComparePage() {
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center py-16">
           <ArrowLeftRight className="h-16 w-16 text-muted-foreground" />
-          <h1 className="mt-4 text-2xl font-bold">No products to compare</h1>
+          <h1 className="font-display mt-4 text-2xl font-bold">No products to compare</h1>
           <p className="mt-2 text-muted-foreground">
             Add products to compare from the shop.
           </p>
@@ -41,7 +41,7 @@ export default function ComparePage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <Breadcrumbs items={[{ label: "Compare" }]} />
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">
+      <h1 className="font-display mt-6 text-2xl font-bold tracking-tight sm:text-3xl">
         Compare Products
       </h1>
 
@@ -53,7 +53,7 @@ export default function ComparePage() {
               {products.map((p) => (
                 <th key={p.id} className="px-4 pb-6 text-center">
                   <div className="mx-auto w-40">
-                    <div className="aspect-square overflow-hidden rounded-xl bg-gray-100">
+                    <div className="aspect-square overflow-hidden rounded-xl bg-secondary">
                       {p.thumbnail ? (
                         <Image
                           src={p.thumbnail}

@@ -20,7 +20,7 @@ export function RecentlyViewed({ excludeId }: { excludeId?: string }) {
             href={`/products/${product.handle}`}
             className="group flex-shrink-0"
           >
-            <div className="h-36 w-28 overflow-hidden rounded-lg bg-gray-100">
+            <div className="h-36 w-28 overflow-hidden rounded-lg bg-secondary">
               {product.thumbnail ? (
                 <Image
                   src={product.thumbnail}

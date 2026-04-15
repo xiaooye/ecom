@@ -1,11 +1,11 @@
 {
-  "name": "WebStore — Clothing E-Commerce",
-  "short_name": "WebStore",
-  "description": "Shop the latest clothing collections. Quality apparel for every style.",
+  "name": "THREAD — Modern Essentials",
+  "short_name": "THREAD",
+  "description": "Thoughtfully crafted clothing in premium fabrics. Built to last, made to be worn.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#171717",
+  "background_color": "#faf8f5",
+  "theme_color": "#1a1714",
   "icons": [
     {
       "src": "/icon-192.png",

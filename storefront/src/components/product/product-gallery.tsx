@@ -54,7 +54,7 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
 
   if (images.length === 0) {
     return (
-      <div className="aspect-square rounded-xl bg-gray-100 flex items-center justify-center text-muted-foreground">
+      <div className="aspect-square rounded-xl bg-secondary flex items-center justify-center text-muted-foreground">
         No image available
       </div>
     );
@@ -63,7 +63,7 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
   return (
     <div className="flex flex-col gap-3">
       {/* Main carousel */}
-      <div className="relative overflow-hidden rounded-xl bg-gray-50">
+      <div className="relative overflow-hidden rounded-xl bg-secondary">
         <div ref={emblaRef}>
           <div className="flex">
             {images.map((image, index) => (

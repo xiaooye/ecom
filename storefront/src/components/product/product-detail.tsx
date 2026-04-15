@@ -59,7 +59,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
       <div className="flex flex-col gap-6">
         <div>
           <div className="flex items-start justify-between gap-4">
-            <h1 className="text-3xl font-bold tracking-tight">{product.title}</h1>
+            <h1 className="font-display text-3xl font-bold tracking-tight">{product.title}</h1>
             <ShareButtons title={product.title} handle={product.handle} />
           </div>
           {price && (
@@ -119,7 +119,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
       {/* Full-width tabs below the grid */}
       <div className="col-span-full">
-        <ProductTabs description={product.description} />
+        <ProductTabs description={product.description} productId={product.id} />
       </div>
     </div>
   );

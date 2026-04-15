@@ -41,7 +41,7 @@ const sampleNotifications: Notification[] = [
   {
     id: "3",
     type: "system",
-    title: "Welcome to WebStore",
+    title: "Welcome to THREAD",
     message: "Thanks for joining! Enjoy 10% off your first order.",
     time: "3 days ago",
     read: true,

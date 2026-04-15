@@ -14,8 +14,8 @@ export default function NotFound() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6">
       {/* Large 404 */}
-      <p className="text-9xl font-black text-muted/50">404</p>
-      <h1 className="mt-4 text-2xl font-bold tracking-tight">
+      <p className="font-display text-9xl font-black text-muted/50">404</p>
+      <h1 className="font-display mt-4 text-2xl font-bold tracking-tight sm:text-3xl">
         Page not found
       </h1>
       <p className="mt-2 text-muted-foreground">

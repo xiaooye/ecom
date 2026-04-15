@@ -10,7 +10,7 @@ export default function ReturnsPolicyPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
       <Breadcrumbs items={[{ label: "Returns & Exchanges" }]} />
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">
+      <h1 className="font-display mt-6 text-2xl font-bold tracking-tight sm:text-3xl">
         Returns & Exchanges
       </h1>
 

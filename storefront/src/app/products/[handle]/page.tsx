@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProductByHandle, getProductsList } from "@/lib/medusa/products";
+import { getProduct, listProducts } from "@/lib/data/products";
 import { ProductDetail } from "@/components/product/product-detail";
 import { ProductCard } from "@/components/product/product-card";
 import { ProductJsonLd } from "@/components/shared/product-json-ld";
@@ -19,48 +19,33 @@ export async function generateMetadata({
 }: ProductPageProps): Promise<Metadata> {
   const { handle } = await params;
 
-  try {
-    const product = await getProductByHandle(handle);
-    if (!product) return { title: "Product Not Found" };
+  const product = await getProduct(handle);
+  if (!product) return { title: "Product Not Found" };
 
-    return {
+  return {
+    title: product.title,
+    description: product.description || `Shop ${product.title}`,
+    openGraph: {
       title: product.title,
-      description: product.description || `Shop ${product.title} at WebStore`,
-      openGraph: {
-        title: product.title,
-        description: product.description || undefined,
-        images: product.thumbnail ? [product.thumbnail] : undefined,
-      },
-    };
-  } catch {
-    return { title: "Product Not Found" };
-  }
+      description: product.description || undefined,
+      images: product.thumbnail ? [product.thumbnail] : undefined,
+    },
+  };
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { handle } = await params;
 
-  let product;
-  try {
-    product = await getProductByHandle(handle);
-  } catch {
-    notFound();
-  }
-
+  const product = await getProduct(handle);
   if (!product) notFound();
 
   const price = product.variants?.[0]?.calculated_price;
 
   // Fetch related products
-  let relatedProducts: Product[] = [];
-  try {
-    const response = await getProductsList({ limit: 4 });
-    relatedProducts = ((response.products ?? []) as unknown as Product[]).filter(
-      (p) => p.id !== product.id
-    ).slice(0, 4);
-  } catch {
-    // Ignore
-  }
+  const { products: allProducts } = await listProducts({ limit: 5 });
+  const relatedProducts = allProducts
+    .filter((p) => p.id !== product.id)
+    .slice(0, 4);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -98,7 +83,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <>
           <Separator className="my-16" />
           <section>
-            <h2 className="text-2xl font-bold tracking-tight">
+            <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
               You May Also Like
             </h2>
             <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">

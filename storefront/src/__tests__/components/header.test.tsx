@@ -73,7 +73,7 @@ vi.mock("@/lib/medusa/cart", () => ({
 // Faithful mock of the Header's rendering output
 vi.mock("@/components/layout/header", async () => {
   const R = await import("react");
-  const STORE_NAME = "WebStore";
+  const STORE_NAME = "THREAD";
 
   const navLinks = [
     { href: "/products", label: "Shop All" },
@@ -187,9 +187,9 @@ vi.mock("@/components/layout/header", async () => {
 import { Header } from "@/components/layout/header";
 
 describe("Header", () => {
-  it("renders store name WebStore", () => {
+  it("renders store name THREAD", () => {
     render(React.createElement(Header));
-    expect(screen.getByText("WebStore")).toBeInTheDocument();
+    expect(screen.getByText("THREAD")).toBeInTheDocument();
   });
 
   it("has navigation links", () => {
@@ -219,7 +219,7 @@ describe("Header", () => {
   it("has links to correct paths", () => {
     render(React.createElement(Header));
 
-    const homeLink = screen.getByText("WebStore").closest("a");
+    const homeLink = screen.getByText("THREAD").closest("a");
     expect(homeLink?.getAttribute("href")).toBe("/");
 
     const accountLink = screen.getByText("Account").closest("a");

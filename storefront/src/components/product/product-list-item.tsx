@@ -14,7 +14,7 @@ export function ProductListItem({ product }: { product: Product }) {
       href={`/products/${product.handle}`}
       className="group flex gap-4 rounded-xl border p-4 transition-colors hover:bg-muted/50"
     >
-      <div className="h-28 w-28 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
+      <div className="h-28 w-28 flex-shrink-0 overflow-hidden rounded-lg bg-secondary">
         {product.thumbnail ? (
           <Image
             src={product.thumbnail}

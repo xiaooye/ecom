@@ -25,7 +25,7 @@ export default function CheckoutSuccessPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="mt-4 text-2xl font-bold"
+        className="font-display mt-4 text-2xl font-bold"
       >
         Order Confirmed!
       </motion.h1>

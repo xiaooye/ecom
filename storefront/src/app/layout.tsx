@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, Playfair_Display } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { Toaster } from "sonner";
@@ -25,27 +25,35 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-display",
+});
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#faf8f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1714" },
+  ],
+};
+
 export const metadata: Metadata = {
   title: {
-    default: "WebStore — Clothing E-Commerce",
-    template: "%s | WebStore",
+    default: "THREAD — Modern Essentials",
+    template: "%s | THREAD",
   },
   description:
-    "Shop the latest clothing collections. Quality apparel for every style.",
+    "Thoughtfully crafted clothing for the modern wardrobe. Premium fabrics, timeless design.",
   manifest: "/manifest.json",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#171717" },
-  ],
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "WebStore",
+    title: "THREAD",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "WebStore",
+    siteName: "THREAD",
   },
 };
 
@@ -59,7 +67,10 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <head>
+          <link rel="preconnect" href="https://images.unsplash.com" />
+        </head>
+        <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <Providers>
             <a

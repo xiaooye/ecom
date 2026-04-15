@@ -20,7 +20,7 @@ const navLinks = [
   { href: "/products", label: "Shop All" },
   { href: "/categories/shirts", label: "Shirts" },
   { href: "/categories/pants", label: "Pants" },
-  { href: "/categories/sweatshirts", label: "Sweatshirts" },
+  { href: "/about", label: "About" },
 ];
 
 export function Header() {
@@ -71,7 +71,7 @@ export function Header() {
         </Sheet>
 
         {/* Logo */}
-        <Link href="/" className="text-lg font-bold tracking-tight sm:text-xl">
+        <Link href="/" className="font-display text-xl font-bold tracking-[0.08em] sm:text-2xl">
           {STORE_NAME}
         </Link>
 

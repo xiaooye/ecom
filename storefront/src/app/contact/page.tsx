@@ -12,11 +12,11 @@ export default function ContactPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
       <Breadcrumbs items={[{ label: "Contact Us" }]} />
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Contact Us</h1>
+      <h1 className="font-display mt-6 text-2xl font-bold tracking-tight sm:text-3xl">Contact Us</h1>
 
       <div className="mt-8 grid grid-cols-1 gap-12 md:grid-cols-2">
         <div>
-          <h2 className="text-lg font-semibold">Send us a message</h2>
+          <h2 className="font-display text-lg font-semibold">Send us a message</h2>
           <ContactForm />
         </div>
 
@@ -28,7 +28,7 @@ export default function ContactPage() {
               <div>
                 <p className="font-medium">Email</p>
                 <p className="text-sm text-muted-foreground">
-                  support@webstore.com
+                  hello@thread.store
                 </p>
               </div>
             </div>

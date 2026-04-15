@@ -43,8 +43,8 @@ export function TrustBadges() {
             variants={staggerItem}
             className="flex flex-col items-center gap-2 text-center"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-              <badge.icon className="h-5 w-5 text-primary" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[hsl(28,60%,48%)]/10">
+              <badge.icon className="h-5 w-5 text-[hsl(28,60%,48%)]" />
             </div>
             <h3 className="text-sm font-semibold">{badge.title}</h3>
             <p className="text-xs text-muted-foreground">

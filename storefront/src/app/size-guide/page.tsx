@@ -25,7 +25,7 @@ export default function SizeGuidePage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
       <Breadcrumbs items={[{ label: "Size Guide" }]} />
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Size Guide</h1>
+      <h1 className="font-display mt-6 text-2xl font-bold tracking-tight sm:text-3xl">Size Guide</h1>
       <p className="mt-4 text-muted-foreground">
         Use the chart below to find your ideal fit. Measurements are in inches.
       </p>

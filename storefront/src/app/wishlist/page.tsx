@@ -17,7 +17,7 @@ export default function WishlistPage() {
         <Breadcrumbs items={[{ label: "Wishlist" }]} />
         <div className="flex flex-col items-center py-16">
           <Heart className="h-16 w-16 text-muted-foreground" />
-          <h1 className="mt-4 text-2xl font-bold">Your wishlist is empty</h1>
+          <h1 className="font-display mt-4 text-2xl font-bold">Your wishlist is empty</h1>
           <p className="mt-2 text-muted-foreground">
             Save items you love for later.
           </p>
@@ -32,7 +32,7 @@ export default function WishlistPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <Breadcrumbs items={[{ label: "Wishlist" }]} />
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">
+      <h1 className="font-display mt-6 text-2xl font-bold tracking-tight sm:text-3xl">
         Wishlist ({items.length})
       </h1>
 
@@ -40,7 +40,7 @@ export default function WishlistPage() {
         {items.map((item) => (
           <div key={item.id} className="group relative">
             <Link href={`/products/${item.handle}`}>
-              <div className="aspect-[3/4] overflow-hidden rounded-lg bg-gray-100">
+              <div className="aspect-[3/4] overflow-hidden rounded-lg bg-secondary">
                 {item.thumbnail ? (
                   <Image
                     src={item.thumbnail}

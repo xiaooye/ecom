@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { getCategoryByHandle, getProductsList } from "@/lib/medusa/products";
+import { getCategory } from "@/lib/data/categories";
+import { listProducts } from "@/lib/data/products";
 import { ProductGrid } from "@/components/product/product-grid";
 import { ProductFilters } from "@/components/product/product-filters";
 import { PaginationControls } from "@/components/product/pagination-controls";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ITEMS_PER_PAGE } from "@/lib/constants";
-import type { Product } from "@/lib/types";
 
 interface CategoryPageProps {
   params: Promise<{ handle: string }>;
@@ -19,16 +19,12 @@ export async function generateMetadata({
   params,
 }: CategoryPageProps): Promise<Metadata> {
   const { handle } = await params;
-  try {
-    const category = await getCategoryByHandle(handle);
-    if (!category) return { title: "Category Not Found" };
-    return {
-      title: `${category.name} — Shop`,
-      description: `Browse our ${category.name} collection.`,
-    };
-  } catch {
-    return { title: "Category Not Found" };
-  }
+  const category = await getCategory(handle);
+  if (!category) return { title: "Category Not Found" };
+  return {
+    title: `${category.name} — Shop`,
+    description: `Browse our ${category.name} collection.`,
+  };
 }
 
 async function CategoryProducts({
@@ -42,21 +38,12 @@ async function CategoryProducts({
   const offset = Number(params.offset || "0");
   const order = (params.order as string) || "created_at";
 
-  let products: Product[] = [];
-  let count = 0;
-
-  try {
-    const response = await getProductsList({
-      limit: ITEMS_PER_PAGE,
-      offset,
-      order,
-      category_id: [categoryId],
-    });
-    products = (response.products ?? []) as Product[];
-    count = response.count ?? 0;
-  } catch {
-    // Backend not available
-  }
+  const { products, count } = await listProducts({
+    limit: ITEMS_PER_PAGE,
+    offset,
+    order,
+    category_id: [categoryId],
+  });
 
   return (
     <>
@@ -72,13 +59,7 @@ export default async function CategoryPage({
 }: CategoryPageProps) {
   const { handle } = await params;
 
-  let category;
-  try {
-    category = await getCategoryByHandle(handle);
-  } catch {
-    notFound();
-  }
-
+  const category = await getCategory(handle);
   if (!category) notFound();
 
   return (
@@ -91,7 +72,7 @@ export default async function CategoryPage({
       />
 
       <div className="mt-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">{category.name}</h1>
+        <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">{category.name}</h1>
         <Suspense>
           <ProductFilters />
         </Suspense>

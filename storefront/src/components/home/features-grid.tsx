@@ -36,8 +36,8 @@ export function FeaturesGrid() {
         viewport={{ once: true }}
         className="text-center"
       >
-        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          Why Choose WebStore
+        <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
+          Why Choose THREAD
         </h2>
         <p className="mt-2 text-muted-foreground">
           More than just clothing — a commitment to quality and sustainability.
@@ -55,10 +55,10 @@ export function FeaturesGrid() {
           <motion.div
             key={feature.title}
             variants={staggerItem}
-            className="group rounded-2xl border p-6 transition-all hover:border-primary hover:shadow-md"
+            className="card-hover group rounded-2xl border p-6"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
-              <feature.icon className="h-6 w-6 text-primary" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[hsl(28,60%,48%)]/10 transition-colors group-hover:bg-[hsl(28,60%,48%)]/20">
+              <feature.icon className="h-6 w-6 text-[hsl(28,60%,48%)]" />
             </div>
             <h3 className="mt-4 font-semibold">{feature.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

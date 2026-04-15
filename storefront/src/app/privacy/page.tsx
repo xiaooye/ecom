@@ -10,7 +10,7 @@ export default function PrivacyPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
       <Breadcrumbs items={[{ label: "Privacy Policy" }]} />
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Privacy Policy</h1>
+      <h1 className="font-display mt-6 text-2xl font-bold tracking-tight sm:text-3xl">Privacy Policy</h1>
 
       <div className="mt-8 space-y-6 text-muted-foreground leading-relaxed">
         <p>Last updated: March 2026</p>
@@ -56,7 +56,7 @@ export default function PrivacyPage() {
           <p className="mt-2">
             You can access, update, or delete your personal information at any
             time through your account settings, or by contacting us at
-            privacy@webstore.com.
+            privacy@thread.store.
           </p>
         </section>
       </div>

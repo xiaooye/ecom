@@ -6,7 +6,7 @@ import { Search as SearchIcon, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { ProductGrid } from "@/components/product/product-grid";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
-import { getProductsList } from "@/lib/medusa/products";
+import { listProducts } from "@/lib/data/products";
 import type { Product } from "@/lib/types";
 
 export default function SearchPage() {
@@ -27,12 +27,8 @@ export default function SearchPage() {
 
   const performSearch = (q: string) => {
     startTransition(async () => {
-      try {
-        const response = await getProductsList({ q, limit: 20 });
-        setProducts((response.products ?? []) as Product[]);
-      } catch {
-        setProducts([]);
-      }
+      const response = await listProducts({ q, limit: 20 });
+      setProducts(response.products);
       setSearched(true);
     });
   };
@@ -47,7 +43,7 @@ export default function SearchPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <Breadcrumbs items={[{ label: "Search" }]} />
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Search</h1>
+      <h1 className="font-display mt-6 text-2xl font-bold tracking-tight sm:text-3xl">Search</h1>
 
       <form onSubmit={handleSubmit} className="mt-6 flex gap-2">
         <div className="relative flex-1">
