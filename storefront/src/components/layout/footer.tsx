@@ -21,6 +21,8 @@ const companyLinks = [
   { href: "/about", label: "About & Architecture" },
   { href: "/privacy", label: "Privacy Policy" },
   { href: "https://wei-dev.com", label: "Developer Portfolio", external: true },
+  { href: "https://data.wei-dev.com", label: "DataPilot", external: true },
+  { href: "https://cms.wei-dev.com", label: "TeamPilot", external: true },
 ];
 
 function SocialIcon({ d, label }: { d: string; label: string }) {
